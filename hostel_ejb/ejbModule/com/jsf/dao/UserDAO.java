@@ -10,9 +10,6 @@ import javax.persistence.Query;
 
 import jpa_entities.User;
 
-//DAO - Data Access Object for Person entity
-//Designed to serve as an interface between higher layers of application and data.
-//Implemented as stateless Enterprise Java bean - server side code that can be invoked even remotely.
 
 @Stateless
 public class UserDAO {
@@ -55,36 +52,36 @@ public class UserDAO {
 	public List<User> getList(Map<String, Object> searchParams) {
 		List<User> list = null;
 
-		// 1. Build query string with parameters
+	
 		String select = "select p ";
-		String from = "from Person p ";
+		String from = "from User p ";
 		String where = "";
-		String orderby = "order by p.surname asc, p.name";
+		String orderby = "order by p.name asc, p.country";
 
-		// search for surname
-		String surname = (String) searchParams.get("surname");
-		if (surname != null) {
+		
+		String name = (String) searchParams.get("name");
+		if (name != null) {
 			if (where.isEmpty()) {
 				where = "where ";
 			} else {
 				where += "and ";
 			}
-			where += "p.surname like :surname ";
+			where += "p.name like :name ";
 		}
 		
-		// ... other parameters ... 
-
-		// 2. Create query object
+	
+	
+	
 		Query query = em.createQuery(select + from + where + orderby);
 
-		// 3. Set configured parameters
-		if (surname != null) {
-			query.setParameter("surname", surname+"%");
+		
+		if (name != null) {
+			query.setParameter("name", name+"%");
 		}
 
-		// ... other parameters ... 
+		
 
-		// 4. Execute query and retrieve list of Person objects
+	
 		try {
 			list = query.getResultList();
 		} catch (Exception e) {

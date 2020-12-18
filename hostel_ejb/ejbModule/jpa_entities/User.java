@@ -27,8 +27,7 @@ public class User implements Serializable {
 
 	private String email;
 
-	@Column(name="id_details")
-	private int idDetails;
+
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="last_login")
@@ -92,14 +91,6 @@ public class User implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public int getIdDetails() {
-		return this.idDetails;
-	}
-
-	public void setIdDetails(int idDetails) {
-		this.idDetails = idDetails;
 	}
 
 	public Date getLastLogin() {
