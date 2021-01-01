@@ -20,6 +20,8 @@ public class Room implements Serializable {
 	private int idRoom;
 
 	private String image;
+	
+	private String description;
 
 	private byte occupied;
 
@@ -37,11 +39,11 @@ public class Room implements Serializable {
 	public Room() {
 	}
 
-	public int getIdRoom() {
+	public Integer getIdRoom() {
 		return this.idRoom;
 	}
 
-	public void setIdRoom(int idRoom) {
+	public void setIdRoom(Integer idRoom) {
 		this.idRoom = idRoom;
 	}
 
@@ -51,6 +53,14 @@ public class Room implements Serializable {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public byte getOccupied() {
