@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import jpa_entities.User;
-
+import com.jsf.dao.RoleDAO;
 
 @Stateless
 public class UserDAO {
@@ -35,19 +35,7 @@ public class UserDAO {
 		return em.find(User.class, id);
 	}
 
-	public List<User> getFullList() {
-		List<User> list = null;
 
-		Query query = em.createQuery("select p from User p");
-
-		try {
-			list = query.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return list;
-	}
 
 	public List<User> getList(Map<String, Object> searchParams) {
 		List<User> list = null;
@@ -56,6 +44,8 @@ public class UserDAO {
 		String select = "select p ";
 		String from = "from User p ";
 		String where = "";
+		String join = " JOIN Role r ";
+		String on = "on p.role = r.idRole";
 		String orderby = "order by p.name asc, p.country";
 
 		
@@ -72,7 +62,7 @@ public class UserDAO {
 	
 	
 	
-		Query query = em.createQuery(select + from + where + orderby);
+		Query query = em.createQuery(select + from + where + join + on);
 
 		
 		if (name != null) {
