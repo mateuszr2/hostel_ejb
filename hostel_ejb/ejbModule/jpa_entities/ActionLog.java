@@ -32,6 +32,11 @@ public class ActionLog implements Serializable {
 
 	public ActionLog() {
 	}
+	public ActionLog(Date data, String log) {
+		this.setDatetime(data);
+		this.setLog(log);
+		
+	}
 
 	public int getIdLog() {
 		return this.idLog;

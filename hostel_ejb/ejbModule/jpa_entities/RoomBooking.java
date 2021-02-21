@@ -19,18 +19,24 @@ public class RoomBooking implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="booking_id")
 	private int bookingId;
-
+	
+	@Column(name="check_in_date")
+	private Date checkInDate;
+	
 	@Temporal(TemporalType.DATE)
+	
 	@Column(name="check_out_date")
 	private Date checkOutDate;
 
 	@Column(name="id_room")
 	private int idRoom;
-
+	
 	//bi-directional many-to-one association to User
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;
+	
+	
 
 	//bi-directional one-to-one association to Room
 	@OneToOne
@@ -43,11 +49,11 @@ public class RoomBooking implements Serializable {
 	public RoomBooking() {
 	}
 
-	public int getBookingId() {
+	public Integer getBookingId() {
 		return this.bookingId;
 	}
 
-	public void setBookingId(int bookingId) {
+	public void setBookingId(Integer bookingId) {
 		this.bookingId = bookingId;
 	}
 
@@ -57,6 +63,14 @@ public class RoomBooking implements Serializable {
 
 	public void setCheckOutDate(Date checkOutDate) {
 		this.checkOutDate = checkOutDate;
+	}
+	
+	public Date getCheckInDate() {
+		return this.checkInDate;
+	}
+
+	public void setCheckInDate(Date checkInDate) {
+		this.checkInDate = checkInDate;
 	}
 
 	public int getIdRoom() {
@@ -82,5 +96,6 @@ public class RoomBooking implements Serializable {
 	public void setRoom(Room room) {
 		this.room = room;
 	}
+
 
 }

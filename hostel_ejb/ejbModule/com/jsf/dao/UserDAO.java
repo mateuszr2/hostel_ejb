@@ -84,6 +84,8 @@ public class UserDAO {
 		return 1 << cost;
 	}
 
+
+	
 	public List<User> getList(Map<String, Object> searchParams) {
 		List<User> list = null;
 
@@ -109,7 +111,7 @@ public class UserDAO {
 	
 	
 	
-		Query query = em.createQuery(select + from + where + join + on);
+		Query query = em.createQuery(select + from + where + orderby);
 
 		
 		if (name != null) {
