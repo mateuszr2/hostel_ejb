@@ -83,7 +83,12 @@ public class UserDAO {
 			throw new IllegalArgumentException("cost: " + cost);
 		return 1 << cost;
 	}
-
+	public List<User> searchForDuplicate(String login, String email) {
+		Query query =  em.createQuery("SELECT u FROM User u WHERE u.login LIKE :login OR u.email LIKE :email");
+		query.setParameter("login", login);
+		query.setParameter("email", email);
+		return query.getResultList();
+	}
 
 	
 	public List<User> getList(Map<String, Object> searchParams) {
