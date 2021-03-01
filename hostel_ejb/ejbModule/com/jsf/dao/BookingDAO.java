@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import jpa_entities.Room;
+
 import jpa_entities.RoomBooking;
 
 
@@ -58,15 +58,14 @@ public class BookingDAO {
 		String select = "select p ";
 		String from = "from RoomBooking p ";
 		String where = "";
-		String join = "JOIN Room r ";
-		String on = "on p.idRoom = r.idRoom";
+		
 		
 	
 		
 	
 	
 	
-		Query query = em.createQuery(select + from + join + on);
+		Query query = em.createQuery(select + from);
 		
 	
 

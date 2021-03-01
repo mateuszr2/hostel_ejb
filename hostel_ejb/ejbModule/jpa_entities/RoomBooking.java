@@ -49,11 +49,11 @@ public class RoomBooking implements Serializable {
 	public RoomBooking() {
 	}
 
-	public Integer getBookingId() {
+	public int getBookingId() {
 		return this.bookingId;
 	}
 
-	public void setBookingId(Integer bookingId) {
+	public void setBookingId(int bookingId) {
 		this.bookingId = bookingId;
 	}
 
