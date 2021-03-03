@@ -1,6 +1,8 @@
 package jpa_entities;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 
@@ -29,12 +31,11 @@ public class Room implements Serializable {
 
 	@Column(name="room_no")
 	private int roomNo;
+	
+	@OneToMany(mappedBy="room")
+	private List<RoomBooking> roomBookings;
 
 	private String type;
-
-	//bi-directional one-to-one association to RoomBooking
-	@OneToOne(mappedBy="room")
-	private RoomBooking roomBooking;
 
 	public Room() {
 	}
@@ -93,14 +94,6 @@ public class Room implements Serializable {
 
 	public void setType(String type) {
 		this.type = type;
-	}
-
-	public RoomBooking getRoomBooking() {
-		return this.roomBooking;
-	}
-
-	public void setRoomBooking(RoomBooking roomBooking) {
-		this.roomBooking = roomBooking;
 	}
 
 }

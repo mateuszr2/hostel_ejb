@@ -1,8 +1,9 @@
 package com.jsf.dao;
 
+
 import java.util.List;
 import java.util.Map;
-
+import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,6 +11,7 @@ import javax.persistence.Query;
 
 
 import jpa_entities.RoomBooking;
+import jpa_entities.User;
 
 
 @Stateless
@@ -49,6 +51,46 @@ public class BookingDAO {
 		}
 
 		return list;
+	}
+	
+	
+//	public List<RoomBooking> searchForDuplicate(Date checkInDate, Date checkOutDate, int idRoom) {
+//		Query query =  em.createQuery("SELECT b FROM RoomBooking b WHERE b.checkInDate BETWEEN :check_in_date AND :check_out_date AND b.checkOutDate BETWEEN :check_in_date AND :check_out_date AND b.room = :id_room");
+//		query.setParameter("check_in_date", checkInDate);
+//		query.setParameter("check_out_date", checkOutDate);
+//		query.setParameter("id_room", idRoom);
+//		return query.getResultList();
+//	}
+	
+	public List<RoomBooking> searchForDuplicate(Date checkInDate, Date checkOutDate, int idRoom) {
+		Query query =  em.createQuery("SELECT b FROM RoomBooking b WHERE b.checkInDate BETWEEN :check_in_date AND :check_out_date AND b.checkOutDate BETWEEN :check_in_date AND :check_out_date AND b.room.idRoom = :id_room");
+		query.setParameter("check_in_date", checkInDate);
+		query.setParameter("check_out_date", checkOutDate);
+		query.setParameter("id_room", idRoom);
+	
+		return query.getResultList();
+		
+	}
+	public List<RoomBooking> searchForDuplicate1(Date checkInDate, Date checkOutDate, int idRoom) {
+		
+		Query query1 =  em.createQuery("SELECT b FROM RoomBooking b WHERE b.checkInDate < :check_in_date AND b.checkOutDate < :check_out_date AND b.room.idRoom = :id_room");
+		
+		query1.setParameter("check_in_date", checkInDate);
+		query1.setParameter("check_out_date", checkOutDate);
+		query1.setParameter("id_room", idRoom);
+		return query1.getResultList();
+		
+	}
+	
+	public List<RoomBooking> searchForDuplicate2(Date checkInDate, Date checkOutDate, int idRoom) {
+		
+		Query query2 =  em.createQuery("SELECT b FROM RoomBooking b WHERE b.checkInDate > :check_in_date AND b.checkOutDate > :check_out_date AND b.room.idRoom = :id_room");
+		
+		query2.setParameter("check_in_date", checkInDate);
+		query2.setParameter("check_out_date", checkOutDate);
+		query2.setParameter("id_room", idRoom);
+		return query2.getResultList();
+		
 	}
 
 	public List<RoomBooking> getList(Map<String, Object> searchParams) {

@@ -28,22 +28,17 @@ public class RoomBooking implements Serializable {
 	@Column(name="check_out_date")
 	private Date checkOutDate;
 
-	@Column(name="id_room")
-	private int idRoom;
+//	@Column(name="id_room")
+//	private int idRoom;
 	
 	//bi-directional many-to-one association to User
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;
-	
-	
 
 	//bi-directional one-to-one association to Room
-	@OneToOne
-	@JoinColumns({
-		@JoinColumn(name="booking_id", referencedColumnName="id_room"),
-		
-		})
+	@ManyToOne
+	@JoinColumn(name="id_room")
 	private Room room;
 
 	public RoomBooking() {
@@ -73,13 +68,13 @@ public class RoomBooking implements Serializable {
 		this.checkInDate = checkInDate;
 	}
 
-	public int getIdRoom() {
-		return this.idRoom;
-	}
-
-	public void setIdRoom(int idRoom) {
-		this.idRoom = idRoom;
-	}
+//	public int getIdRoom() {
+//		return this.idRoom;
+//	}
+//
+//	public void setIdRoom(int idRoom) {
+//		this.idRoom = idRoom;
+//	}
 
 	public User getUser() {
 		return this.user;
