@@ -53,16 +53,18 @@ public class BookingDAO {
 		return list;
 	}
 	
-	
-//	public List<RoomBooking> searchForDuplicate(Date checkInDate, Date checkOutDate, int idRoom) {
-//		Query query =  em.createQuery("SELECT b FROM RoomBooking b WHERE b.checkInDate BETWEEN :check_in_date AND :check_out_date AND b.checkOutDate BETWEEN :check_in_date AND :check_out_date AND b.room = :id_room");
-//		query.setParameter("check_in_date", checkInDate);
-//		query.setParameter("check_out_date", checkOutDate);
-//		query.setParameter("id_room", idRoom);
-//		return query.getResultList();
-//	}
-	
 	public List<RoomBooking> searchForDuplicate(Date checkInDate, Date checkOutDate, int idRoom) {
+		Query query =  em.createQuery("SELECT b FROM RoomBooking b WHERE ( :check_in_date BETWEEN b.checkInDate AND b.checkOutDate ) OR ( :check_out_date BETWEEN b.checkInDate AND b.checkOutDate ) AND b.room.idRoom = :id_room");
+		query.setParameter("check_in_date", checkInDate);
+		query.setParameter("check_out_date", checkOutDate);
+		query.setParameter("id_room", idRoom);
+	
+		return query.getResultList();
+		
+	}
+
+
+	public List<RoomBooking> searchForDuplicate1(Date checkInDate, Date checkOutDate, int idRoom) {
 		Query query =  em.createQuery("SELECT b FROM RoomBooking b WHERE b.checkInDate BETWEEN :check_in_date AND :check_out_date AND b.checkOutDate BETWEEN :check_in_date AND :check_out_date AND b.room.idRoom = :id_room");
 		query.setParameter("check_in_date", checkInDate);
 		query.setParameter("check_out_date", checkOutDate);
@@ -71,6 +73,7 @@ public class BookingDAO {
 		return query.getResultList();
 		
 	}
+	/*
 	public List<RoomBooking> searchForDuplicate1(Date checkInDate, Date checkOutDate, int idRoom) {
 		
 		Query query1 =  em.createQuery("SELECT b FROM RoomBooking b WHERE b.checkInDate < :check_in_date AND b.checkOutDate < :check_out_date AND b.room.idRoom = :id_room");
@@ -92,33 +95,7 @@ public class BookingDAO {
 		return query2.getResultList();
 		
 	}
-	
-	
-	
-	
-	public List<RoomBooking> getFullUserBookingList(int userId) {
-		List<RoomBooking> list = null;
-
-		Query query = em.createQuery("SELECT b FROM RoomBooking b WHERE b.user.userId = :user_id");
-
-		try {
-			list = query.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return list;
-	}
-	
-public List<RoomBooking> userBooking(int userId) {
-		
-		Query query1 =  em.createQuery("SELECT b FROM RoomBooking b WHERE b.user.userId = :user_id");
-		
-		query1.setParameter("user_id", userId);
-		return query1.getResultList();
-		
-	}
-
+*/	
 	public List<RoomBooking> getList(Map<String, Object> searchParams) {
 		List<RoomBooking> list = null;
 
@@ -127,26 +104,16 @@ public List<RoomBooking> userBooking(int userId) {
 		String from = "from RoomBooking p ";
 		String where = "";
 		
-		String name = (String) searchParams.get("name");
-		if (name != null) {
-			if (where.isEmpty()) {
-				where = "where ";
-			} else {
-				where += "and ";
-			}
-			where += "p.name like :name ";
-		}
+		
 	
 		
 	
 	
 	
-		Query query = em.createQuery(select + from + where);
+		Query query = em.createQuery(select + from);
 		
 	
-		if (name != null) {
-			query.setParameter("name", name+"%");
-		}
+		
 	
 
 		
@@ -170,11 +137,11 @@ public List<RoomBooking> userBooking(int userId) {
 	public List<RoomBooking> getBookingUserList(User user) {
 		List<RoomBooking> list = null;
 
-		Query query = em.createQuery("from RoomBooking b " + "where b.user =:user_id");
-		query.setParameter("user_id", user);
+		Query query6 = em.createQuery("from RoomBooking p " + "where p.user =:user_id");
+		query6.setParameter("user_id", user);
 
 		try {
-			list = query.getResultList();
+			list = query6.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
