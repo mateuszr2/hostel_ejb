@@ -92,6 +92,32 @@ public class BookingDAO {
 		return query2.getResultList();
 		
 	}
+	
+	
+	
+	
+	public List<RoomBooking> getFullUserBookingList(int userId) {
+		List<RoomBooking> list = null;
+
+		Query query = em.createQuery("SELECT b FROM RoomBooking b WHERE b.user.userId = :user_id");
+
+		try {
+			list = query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	
+public List<RoomBooking> userBooking(int userId) {
+		
+		Query query1 =  em.createQuery("SELECT b FROM RoomBooking b WHERE b.user.userId = :user_id");
+		
+		query1.setParameter("user_id", userId);
+		return query1.getResultList();
+		
+	}
 
 	public List<RoomBooking> getList(Map<String, Object> searchParams) {
 		List<RoomBooking> list = null;
@@ -101,16 +127,26 @@ public class BookingDAO {
 		String from = "from RoomBooking p ";
 		String where = "";
 		
-		
+		String name = (String) searchParams.get("name");
+		if (name != null) {
+			if (where.isEmpty()) {
+				where = "where ";
+			} else {
+				where += "and ";
+			}
+			where += "p.name like :name ";
+		}
 	
 		
 	
 	
 	
-		Query query = em.createQuery(select + from);
+		Query query = em.createQuery(select + from + where);
 		
 	
-
+		if (name != null) {
+			query.setParameter("name", name+"%");
+		}
 	
 
 		
@@ -124,6 +160,32 @@ public class BookingDAO {
 
 		return list;
 	}
+	
+	
+	
+	
+	
+	
+	
+	public List<RoomBooking> getBookingUserList(User user) {
+		List<RoomBooking> list = null;
+
+		Query query = em.createQuery("from RoomBooking b " + "where b.user =:user_id");
+		query.setParameter("user_id", user);
+
+		try {
+			list = query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	
+	
+	
+	
+	
 	
 	
 
